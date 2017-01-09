@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mijn eerst javascript</title>
+</head>
+<body>
+    <h1 id="title">Dit is een titel</h1>
+
+    <form id="loginform">
+        <h2>Formulier</h2>
+        <input type="text" name="email" placeholder="E-mailadres" id="email" />
+        <input type="password" name="passsword" placeholder="Wachtwoord" id="password" />
+        <button type="submit">Inloggen</button>
+        <div>Jouw wachtwoord is: <span id="passwordstrength">Leeg</span>
+    </form>
+
+    <h2>Divje</h2>
+
+    <div id="div1" style="width: 100px; height: 100px; border: 1px solid #000"></div>
+
+    <script>
+        var div = document.getElementById('div1');
+
+        div.addEventListener('click', function(){
+            alert('je hebt geklikt');
+        });
+
+
+        var loginform = document.getElementById('loginform');
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
+        
+
+        password.addEventListener('keyup', function(){
+            document.getElementById('passwordstrength').innerHTML = scorePassword(password.value);
+        });
+
+       
+        function scorePassword(pass) {
+            var score = 0;
+            if (!pass)
+                return score;
+
+            // award every unique letter until 5 repetitions
+            var letters = new Object();
+            for (var i=0; i<pass.length; i++) {
+                letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+                score += 5.0 / letters[pass[i]];
+            }
+
+            // bonus points for mixing it up
+            var variations = {
+                digits: /\d/.test(pass),
+                lower: /[a-z]/.test(pass),
+                upper: /[A-Z]/.test(pass),
+                nonWords: /\W/.test(pass),
+            }
+
+            variationCount = 0;
+            for (var check in variations) {
+                variationCount += (variations[check] == true) ? 1 : 0;
+            }
+            score += (variationCount - 1) * 10;
+
+            return parseInt(score);
+        }
+        
+    </script>
+</body>
+</html>
